@@ -1,0 +1,16 @@
+{
+  "hub": {
+    "on": "On",
+    "off": "Off",
+    "card": {
+      "light": {
+        "brightness": "Brightness",
+        "color_temp": "Color Temperature"
+      },
+      "cover": {
+        "position": "Position",
+        "tilt_position": "Tilt Position"
+      }
+    }
+  }
+}

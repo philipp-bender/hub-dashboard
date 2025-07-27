@@ -1,0 +1,16 @@
+{
+  "hub": {
+    "on": "An",
+    "off": "Aus",
+    "card": {
+      "light": {
+        "brightness": "Helligkeit",
+        "color_temp": "Farbtemperatur"
+      },
+      "cover": {
+        "position": "Position",
+        "tilt_position": "Lamellen"
+      }
+    }
+  }
+}
