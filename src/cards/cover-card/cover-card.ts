@@ -21,7 +21,6 @@ export class HubCoverCard extends HubBaseCard<CoverCardConfig, CoverEntity> {
   @state() private tiltPosition: number = 0;
 
   private initComponent(): void {
-    console.log(this.entity)
     if (this.entity && this.baseActionCardRef) {
       this.position = 100 - this.entity?.attributes?.current_position || 0;
       this.tiltPosition = this.entity?.attributes?.current_tilt_position || 0;

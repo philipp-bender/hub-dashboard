@@ -16,5 +16,6 @@ import "./chips/binary-sensor-chip/binary-sensor-chip";
 import "./cards/light-card/light-card";
 import "./cards/cover-card/cover-card";
 import "./cards/switch-card/switch-card";
+import "./cards/climate-card/climate-card";
 
 console.info(`%c Hub Dashboard - ${version}`, "color:rgb(0, 99, 198); font-weight: 700;");
