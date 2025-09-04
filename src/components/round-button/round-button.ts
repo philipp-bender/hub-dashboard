@@ -1,50 +1,63 @@
-import { LitElement, html } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { LitElement, html, css, CSSResultGroup } from "lit";
+import { customElement, property } from "lit/decorators.js";
 import { HomeAssistant } from "../../ha";
 import { RoundButtonConfig } from "./round-button.types";
 import { PREFIX_NAME } from "../../const";
+import { roundButtonStyles } from "../../styles/index";
 
 @customElement(`${PREFIX_NAME}-round-button`)
 export class RoundButton extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
   @property({ type: Object }) public config!: RoundButtonConfig;
 
-  @state() private _card: any = null;
 
-  async setConfig(config: any) {
+  setConfig(config: RoundButtonConfig) {
+    if (!config) throw new Error("No config provided");
     this.config = config;
+  }
 
-    const helpers = await (window as any).loadCardHelpers();
+  private _handleClick() {
+    const tap = this.config.tap_action;
+    if (!tap) return;
 
-    if (!config) return;
+    switch (tap.action) {
+      case "navigate":
+        if (tap.navigation_path) {
+          history.pushState(null, "", tap.navigation_path);
+          const ev = new Event("location-changed", { bubbles: true, composed: true });
+          window.dispatchEvent(ev);
+        }
+        break;
 
-    this._card = await helpers.createCardElement({
-      ...config,
-      type: "custom:button-card",
-      styles: {
-        card: [
-          {
-            "background-color": "#363640",
-            "border-radius": "50%",
-            width: "64px",
-            height: "64px",
-            "border-width": "0",
-          },
-        ],
-        icon: [
-          {
-            "font-size": "40px",
-            color: "#ffffff",
-          },
-        ],
-      },
-    });
+      case "toggle":
+        if (this.hass && (tap.entity || this.config.entity)) {
+          this.hass.callService("homeassistant", "toggle", {
+            entity_id: tap.entity ?? this.config.entity,
+          });
+        }
+        break;
 
-    this._card.hass = this.hass;
-    this.requestUpdate();
+      case "call-service":
+        if (this.hass && tap.service) {
+          const [domain, service] = tap.service.split(".");
+          this.hass.callService(domain, service, tap.service_data || {});
+        }
+        break;
+
+      default:
+        console.warn("Unsupported tap_action", tap);
+    }
   }
 
   render() {
-    return html`${this._card}`;
+    return html`
+      <button class="round-button" @click=${this._handleClick}>
+        ${this.config.icon ? html`<ha-icon .icon=${this.config.icon}></ha-icon>` : ""}
+      </button>
+    `;
+  }
+
+  static get styles(): CSSResultGroup {
+    return [roundButtonStyles, css``];
   }
 }

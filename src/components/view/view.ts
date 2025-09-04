@@ -1,7 +1,7 @@
 import { LitElement, html, css, PropertyValues, CSSResultGroup } from "lit";
 import { customElement, property, state, query } from "lit/decorators.js";
 import HubUtil from "../../utils/hub-utils";
-import { roundButtonStyles } from "../../styles/index";
+import { roundButtonStyles, viewportStyles } from "../../styles/index";
 import { HomeAssistant, LovelaceCard } from "../../ha";
 import { ViewConfig } from "./view.types.js";
 import { HubModal } from "../../shared/modal/modal";
@@ -123,6 +123,7 @@ export class HubView extends LitElement {
   static get styles(): CSSResultGroup {
     return [
       roundButtonStyles,
+      viewportStyles,
       css`
         .hub-layout {
           display: flex;
@@ -133,12 +134,18 @@ export class HubView extends LitElement {
         }
 
         .sidebar {
-          width: 104px;
+          width: 80px;
           display: flex;
           flex: none;
           flex-direction: column;
           justify-content: space-between;
           padding: 1rem 0;
+        }
+
+        @media (min-width: var(--viewport-md)) {
+          .sidebar {
+            width: 104px;
+          }
         }
 
         .nav {
@@ -168,7 +175,7 @@ export class HubView extends LitElement {
         .scroll__left-shadow::before {
           content: "";
           position: fixed;
-          left: calc(var(--sidebar-width) + 104px);
+          left: calc(var(--sidebar-width) + 80px);
           top: 0;
           height: calc(100% - 104px);
           width: 150px;
@@ -220,9 +227,20 @@ export class HubView extends LitElement {
 
         .navigation-modal__grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
+          grid-template-columns: 1fr;
           width: 100%;
-          gap: 20px;
+          gap: 8px;
+        }
+
+        @media (min-width: var(--viewport-md)) {
+          .navigation-modal__grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+          }
+
+          .scroll__left-shadow::before {
+            left: calc(var(--sidebar-width) + 104px);
+          }
         }
       `,
     ];

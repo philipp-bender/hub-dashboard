@@ -65,18 +65,34 @@ export class HubModal extends LitElement {
           padding: 0;
           width: 100%;
           height: 100%;
-          margin: 20px;
+          margin: 16px;
           background: linear-gradient(90deg, #0a090d 0%, #201f25 100%);
           color: white;
           position: relative;
         }
+
+        @media (min-width: var(--viewport-md)) {
+          dialog {
+            margin: 20px;
+          }
+        }
+
         .modal__inner {
           display: flex;
-          height: calc(100% - 40px);
+          height: calc(100% - 64px - 16px);
           flex-direction: column;
           align-items: center;
-          padding: 20px;
+          padding: 16px;
+          padding-bottom: 64px;
         }
+
+        @media (min-width: var(--viewport-md)) {
+          .modal__inner {
+            height: calc(100% - 84px - 20px);
+            margin: 20px;
+          }
+        }
+
         .modal__title {
           font-size: 1.5rem;
           width: 100%;
@@ -94,10 +110,19 @@ export class HubModal extends LitElement {
           position: absolute;
           display: inline-flex;
           justify-content: space-between;
-          bottom: 20px;
-          left: 20px;
-          right: 20px;
+          bottom: 16px;
+          left: 16px;
+          right: 16px;
         }
+
+        @media (min-width: var(--viewport-md)) {
+          .modal__actions {
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+          }
+        }
+
         .modal__left,
         .modal__right,
         .modal__pagination {

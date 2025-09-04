@@ -1,6 +1,6 @@
 {
   "name": "hub-dashboard",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Home Assistant Hub Dashboard",
   "main": "index.js",
   "scripts": {

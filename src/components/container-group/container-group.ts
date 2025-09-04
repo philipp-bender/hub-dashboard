@@ -91,7 +91,13 @@ export class HubContainerGroup extends LitElement {
           grid-template-columns: repeat(var(--grid-columns), var(--grid-size));
           grid-template-rows: repeat(var(--grid-rows), var(--grid-size));
           height: 100%;
-          gap: 20px;
+          gap: 12px;
+        }
+
+        @media (min-width: var(--viewport-md)) {
+          .container-group__inner {
+            gap: 20px;
+          }
         }
       `,
     ];
